@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-nqueens problem
+Solution to the nqueens problem
 """
 import sys
 
@@ -66,4 +66,3 @@ if __name__ == "__main__":
     except ValueError:
         print("N must be a number")
         sys.exit(1)
-
