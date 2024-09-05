@@ -1,31 +1,27 @@
 #!/usr/bin/node
-// Prints all characters of a Star Wars movie using the ALX Star Wars API
 
-if (process.argv.length !== 3) {
-  process.exit();
-}
-const movieID = process.argv[2];
-const url = `https://swapi-api.alx-tools.com/api/films/${movieID}`;
 const request = require('request');
 
-function printNextCharacter (urls) {
-  const characterURL = urls.shift();
-  if (characterURL) {
-    request(characterURL, function (error, response, body) {
-      if (!error) {
-        console.log(JSON.parse(body).name);
-        printNextCharacter(urls);
-      }
-    });
-  }
-}
-
-function printStarWarsCharacters (url) {
-  request(url, function (error, response, body) {
-    if (!error) {
-      printNextCharacter(JSON.parse(body).characters);
+const req = (arr, i) => {
+  if (i === arr.length) return;
+  request(arr[i], (err, response, body) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(JSON.parse(body).name);
+      req(arr, i + 1);
     }
   });
-}
+};
 
-printStarWarsCharacters(url);
+request(
+  `https://swapi-api.hbtn.io/api/films/${process.argv[2]}`,
+  (err, response, body) => {
+    if (err) {
+      throw err;
+    } else {
+      const chars = JSON.parse(body).characters;
+      req(chars, 0);
+    }
+  }
+);
