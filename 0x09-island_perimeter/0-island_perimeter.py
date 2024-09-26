@@ -1,79 +1,26 @@
-    #!/usr/bin/python3
-"""
-function that finds the perimeter
-of an island in a body of water
-"""
-
-b_4 = set()
-b_3 = set()
-b_2 = set()
-b_1 = set()
-
-
-def boundary(grid, i, j):
-    """Find cells with either 4, 3, 2 or 1 exposed boundary and add them to
-       appropriate set
-       Args:
-           grid (list): 2d list
-           i (int): row number
-           j (int): column number
-    """
-    boundaries = 0
-    try:
-        if i == 0:
-            boundaries += 1
-        elif grid[i-1][j] == 0:
-            boundaries += 1
-    except:
-        boundaries += 1
-    try:
-        if grid[i+1][j] == 0:
-            boundaries += 1
-    except:
-        boundaries += 1
-    try:
-        if grid[i][j+1] == 0:
-            boundaries += 1
-    except:
-        boundaries += 1
-    try:
-        if j == 0:
-            boundaries += 1
-        elif grid[i][j-1] == 0:
-            boundaries += 1
-    except:
-        boundaries += 1
-
-    if boundaries == 1:
-        b_1.add((i, j))
-    elif boundaries == 2:
-        b_2.add((i, j))
-    elif boundaries == 3:
-        b_3.add((i, j))
-    elif boundaries == 4:
-        b_4.add((i, j))
+#!/usr/bin/python3
+"""Defines island perimeter finding function."""
 
 
 def island_perimeter(grid):
-    """
-    Calculate and return perimeter of island in the grid
-    Grid is a rectangular grid where 0s represent water and 1s represent land
-    Each cell is a square with a side length of 1
-    There is only one island
+    """Return the perimiter of an island.
+    The grid represents water by 0 and land by 1.
     Args:
-        grid [list] : 2d list of ints either 0 or 1
-    Return:
-       perimeter of island
+        grid (list): A list of list of integers representing an island.
+    Returns:
+        The perimeter of the island defined in grid.
     """
-    if grid == []:
-        return 0
-    l = len(grid)
     w = len(grid[0])
-    for i in range(l):
+    h = len(grid)
+    edges = 0
+    s = 0
+
+    for i in range(h):
         for j in range(w):
             if grid[i][j] == 1:
-                boundary(grid, i, j)
-                if len(b_4) != 0:
-                    return 4
-    perimeter = (len(b_3) * 3) + (len(b_2) * 2) + (len(b_1))
-    return perimeter
+                s += 1
+                if (j > 0 and grid[i][j - 1] == 1):
+                    edges += 1
+                if (i > 0 and grid[i - 1][j] == 1):
+                    edges += 1
+    return s * 4 - edges * 2
