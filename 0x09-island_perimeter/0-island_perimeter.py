@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+    #!/usr/bin/python3
 """
 function that finds the perimeter
 of an island in a body of water
@@ -77,4 +77,3 @@ def island_perimeter(grid):
                     return 4
     perimeter = (len(b_3) * 3) + (len(b_2) * 2) + (len(b_1))
     return perimeter
-
